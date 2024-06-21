@@ -1,0 +1,52 @@
+<div id="payment-wait">
+    {% if object.is_processing %}
+        <div
+            class="Section"
+            hx-get="{% url 'payment_progress' pk=object.id %}"
+            hx-trigger="every 3.2s"
+            hx-target="#payment-wait"
+        >
+            <div class="wrap">
+                <div class="ProgressPayment">
+                    <div class="ProgressPayment-title">Ожидайте подтверждения оплаты платежной системой</div>
+                    <div class="ProgressPayment-icon">
+                        <div class="cssload-thecube">
+                            <div class="cssload-cube cssload-c1"></div>
+                            <div class="cssload-cube cssload-c2"></div>
+                            <div class="cssload-cube cssload-c4"></div>
+                            <div class="cssload-cube cssload-c3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif object.is_error %}
+        <div class="Section">
+            <div class="wrap">
+                <div class="ProgressPayment">
+                    <div class="checkmark-failed">✘</div>
+                    <div class="ProgressPayment-title-failed">Something went wrong...</div>
+                    <p>
+                        We received an error
+                        <br/>
+                        while processing the payment
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% elif object.is_paid %}
+        <div class="Section">
+            <div class="wrap">
+                <div class="ProgressPayment">
+                    <div class="checkmark-success">✔</div>
+                    <div class="ProgressPayment-title-success">Success</div>
+                    <p>
+                        We received your purchase request;
+                        <br/>
+                        we'll be in touch shortly!
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
